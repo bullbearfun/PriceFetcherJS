@@ -9,11 +9,12 @@ export class BinanceOracle {
     connect() {
         this.websocket = new WebSocket(this.base_url)
 
+        let that = this
         this.websocket.onerror = this.websocket.onclose = (e) => {
+            that.latest_price = 0
             console.log(e)
         }
 
-        let that = this
         this.websocket.onmessage = (message) => {
             try {
                 let json_msg = JSON.parse(message.data)

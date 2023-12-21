@@ -10,7 +10,9 @@ export class KrakenOracle {
         this.websocket = new WebSocket(this.base_url)
         this._last_ping = Date.now() / 1000
 
+        let that = this
         this.websocket.onerror = this.websocket.onclose = (e) => {
+            that.latest_price = 0
             console.log(e)
         }
 
@@ -22,7 +24,6 @@ export class KrakenOracle {
             })
         }
 
-        let that = this
         this.websocket.onmessage = (message) => {
             try {
                 let json_msg = JSON.parse(message.data)
