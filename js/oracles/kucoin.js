@@ -7,16 +7,24 @@ export class KucoinOracle {
     }
 
     async connect() {
-        let response = await fetch('https://api.kucoin.com/api/v1/bullet-public', {method: 'POST'})
-        let data = await response.json()
+        /*
+            let response = await fetch('https://api.kucoin.com/api/v1/bullet-public', {method: 'POST'})
 
-        if (!data?.data?.token) {
-            console.error("Couldn't fetch token")
-            console.log(data)
-            return
-        }
+            let data = await response.json()
 
-        this.websocket = new WebSocket(this.base_url + data.data.token)
+            if (!data?.data?.token) {
+                console.error("Couldn't fetch token")
+                console.log(data)
+                return
+            }
+
+            let token = data.data.token
+        */
+
+        // This token may not work forever
+        let token = '2neAiuYvAU61ZDXANAGAsiL4-iAExhsBXZxftpOeh_55i3Ysy2q2LEsEWU64mdzUOPusi34M_wGoSf7iNyEWJ2CaJ_VrLDX8KnbfutX_NyAGXc2kL2ZpVtiYB9J6i9GjsxUuhPw3BlrzazF6ghq4L4YKq1CAFCSAmyg-PiLQyoQ=.6EIesiBGNuMJgkv_AtlErQ=='
+
+        this.websocket = new WebSocket(this.base_url + token)
         this._last_ping = Date.now() / 1000
 
         this.websocket.onerror = this.websocket.onclose = (e) => {
