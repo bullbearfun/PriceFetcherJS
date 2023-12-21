@@ -59,7 +59,9 @@ export class KucoinOracle {
                     })
                     that._last_ping = _now
                 }
-            } catch (e) {}
+            } catch (e) {
+                that.latest_price = 0
+            }
         }
     }
 

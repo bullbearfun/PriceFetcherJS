@@ -1,19 +1,20 @@
 html {
-  color: #ddd;
   font-size: 1em;
   line-height: 1.4;
   text-align: center;
-  background: #222;
+  font-family: 'Noto Sans', sans-serif;
+  letter-spacing: 0.05rem;
+  background-color: #12131D;
+  color: #FCFEFF;
 }
 
 div.price-box {
-  color: #222;
+  color: #12131D;
   border: 1px #999 solid;
-  min-height: 1.4em;
   width: 7em;
   margin: 0 auto;
   border-radius: 0.5em;
-  background: #ddd;
+  background: #FCFEFF;
 }
 
 div.live-price {
@@ -31,4 +32,8 @@ div.wrapper {
 
 div.wrapper>div.column {
   flex: 16.6%
+}
+
+h3.live-price-label {
+  margin: 1rem auto 0.5rem auto;
 }

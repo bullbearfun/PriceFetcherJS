@@ -24,19 +24,23 @@ export class KrakenOracle {
 
         let that = this
         this.websocket.onmessage = (message) => {
-            let json_msg = JSON.parse(message.data)
+            try {
+                let json_msg = JSON.parse(message.data)
 
-            if (json_msg[2] !== 'trade')
-                return
+                if (json_msg[2] !== 'trade')
+                    return
 
-            that.latest_price = parseFloat(json_msg[1][0][0])
+                that.latest_price = parseFloat(json_msg[1][0][0])
 
-            let _now = Math.floor(Date.now() / 1000)
-            if (that._last_ping + 30 < _now) {
-                that.send_message({
-                    event: "ping",
-                })
-                that._last_ping = _now
+                let _now = Math.floor(Date.now() / 1000)
+                if (that._last_ping + 30 < _now) {
+                    that.send_message({
+                        event: "ping",
+                    })
+                    that._last_ping = _now
+                }
+            } catch (e) {
+                that.latest_price = 0
             }
         }
     }

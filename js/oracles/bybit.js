@@ -23,23 +23,27 @@ export class BybitOracle {
 
         let that = this
         this.websocket.onmessage = (message) => {
-            let json_msg = JSON.parse(message.data)
+            try {
+                let json_msg = JSON.parse(message.data)
 
-            if (!json_msg?.topic?.startsWith('tickers'))
-                return
+                if (!json_msg?.topic?.startsWith('tickers'))
+                    return
 
-            let price = json_msg?.data?.lastPrice
-            if (!price)
-                return
+                let price = json_msg?.data?.lastPrice
+                if (!price)
+                    return
 
-            that.latest_price = parseFloat(price)
+                that.latest_price = parseFloat(price)
 
-            let _now = Math.floor(Date.now() / 1000)
-            if (that._last_ping + 30 < _now) {
-                that.send_message({
-                    op: "ping",
-                })
-                that._last_ping = _now
+                let _now = Math.floor(Date.now() / 1000)
+                if (that._last_ping + 30 < _now) {
+                    that.send_message({
+                        op: "ping",
+                    })
+                    that._last_ping = _now
+                }
+            } catch (e) {
+                that.latest_price = 0
             }
         }
     }

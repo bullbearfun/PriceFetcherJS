@@ -15,10 +15,14 @@ export class BinanceOracle {
 
         let that = this
         this.websocket.onmessage = (message) => {
-            let json_msg = JSON.parse(message.data)
-            let ask = parseFloat(json_msg['a'])
-            let bid = parseFloat(json_msg['b'])
-            that.latest_price = (ask + bid) / 2
+            try {
+                let json_msg = JSON.parse(message.data)
+                let ask = parseFloat(json_msg['a'])
+                let bid = parseFloat(json_msg['b'])
+                that.latest_price = (ask + bid) / 2
+            } catch (e) {
+                that.latest_price = 0
+            }
         }
     }
 

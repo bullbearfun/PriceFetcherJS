@@ -39,7 +39,9 @@ export class BitgetOracle {
                     that.websocket.send('ping')
                     that._last_ping = _now
                 }
-            } catch (e) {}
+            } catch (e) {
+                that.latest_price = 0
+            }
         }
     }
 
